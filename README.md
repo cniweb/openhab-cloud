@@ -14,6 +14,7 @@ provides an OAuth2 application enablement.
 
 
 ![FunctionalArchitecture](/docs/FunctionalArchitecture_openHAB-cloud_v1.0.png)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fcniweb%2Fopenhab-cloud.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fcniweb%2Fopenhab-cloud?ref=badge_shield)
 
 
 
@@ -24,12 +25,14 @@ openHAB Cloud is mainly based on the following frameworks and technologies:
 
 
 * [Node.js](https://nodejs.org/en/) - Server-side Javascript-framework
-* [Express.js](http://expressjs.com/) - Web application framework for Node.js
+* [Express.js](http://redis.io) - Web application framework for Node.js
 * [Nginx](https://www.nginx.com/resources/wiki/) - Web server & reverse proxy
 * [MongoDB](https://www.mongodb.com/) - NoSQL database
 * [redis](http://redis.io) - Session Manager & data structure server
 * [Socket.IO](http://socket.io/) - Bi-directional communication between web clients and servers
 
+Note:
+At the moment openHAB Cloud needs a specific version (0.10.48) of Node.js installed. You can install [Node Version Manager](https://github.com/creationix/nvm) locally to manage the needed Node.js version.
 
 ### <a name="quickStart"></a> Quick start ###
 
@@ -44,10 +47,10 @@ sudo apt-get update
 sudo apt-get upgrade
 ```
 
-We need to install redis, mongoDB, Nginx and Python:
+We need to install redis, mongoDB and Nginx:
 
 ```
-sudo apt-get install build-essential redis-server mongodb nginx python
+sudo apt-get install build-essential redis-server mongodb nginx
 ```
 
 Now you need install git and clone the openHAB Cloud repository to your
@@ -60,7 +63,7 @@ git clone https://github.com/openhab/openhab-cloud.git
 ```
 
 
-Clone the openhab-cloud repository and after the completed checkout you should have the directory in your chosen folder:
+Clone the openhabcloud repository and after the completed checkout you should have the directory in your chosen folder:
 ```
 ls -al
 total 32
@@ -69,25 +72,16 @@ drwxr-xr-x  3 root   root   4096 Jun  4 12:34 ..
 -rw-r--r--  1 ubuntu ubuntu  220 Apr  9  2014 .bash_logout
 -rw-r--r--  1 ubuntu ubuntu 3637 Apr  9  2014 .bashrc
 drwx------  2 ubuntu ubuntu 4096 Jun  4 16:30 .cache
-drwxr-xr-x 13 root   root   4096 Jun  4 17:06 openhab-cloud
+drwxr-xr-x 13 root   root   4096 Jun  4 17:06 openhabcloud
 -rw-r--r--  1 ubuntu ubuntu  675 Apr  9  2014 .profile
 drwx------  2 ubuntu ubuntu 4096 Jun  4 12:34 .ssh
 ```
 
 
-Now we need to change into the openhab-cloud directory and check if node is installed:
-
-```
-node --version
-```
-
-
-If you see the node version, you are fine to continue (Note: openHAB Cloud is based on Node.js version 7.10.1).
-
 To run openHAB Cloud you need to install the required software bundles/stacks:
 
 ```
-cd openhab-cloud
+cd openhabcloud
 ```
 ```
 npm install
@@ -97,6 +91,15 @@ and all the module dependencies from **package.json** will be resolved and neede
 
 
 
+Now we need to change into the openhabcloud directory and check if node is installed:
+
+```
+ls -al
+node --version
+```
+
+
+If you see the node version, you are fine to continue.
 
 
 
@@ -110,12 +113,6 @@ redis-cli ping
 ```
 Redis will answer with PONG if all is fine.
 
-In the next step you have to rename the system configuration file:
-```
-config-production.json -> config.json
-```
-Adjust the config parameters according your setup
-(Note: MongoDB username and password fields should be deleted, if there is no authentication activated).
 
 Now you can run openHAB Cloud by the following command:
 ```
@@ -189,9 +186,6 @@ location /fonts {
 location /js-plugin {
     alias /home/ubuntu/openhabcloud/public/js-plugin;
     }
-location /staff/js-plugin {
-    alias /home/ubuntu/openhabcloud/public/js-plugin;
-    }
 location /downloads {
     alias /home/ubuntu/openhabcloud/public/downloads;
     }
@@ -223,99 +217,6 @@ You need to restart nginx:
 ```
 sudo service nginx restart
 ```
-
-## <a name="docker"></a> Docker ###
- 
-The section describes how the openHAB-cloud docker images can be used with docker-compose
-to spin up the dockerized openhab-cloud backend.
-
-
-#### Architecture
-The dockerized openhab-cloud uses a separate docker image and container for each part of the overall system
-according to the following stack:
-* app-1: node.js and express.js (openhab/openhab-cloud/app-1:latest)
-* mongodb: MongoDB database (bitnami/mongodb:latest)
-* nginx: nginx proxy (openhab/openhab-cloud/nginx:latest)
-* redis: redis session manager (bitnami/redis:latest)
-
-#### Prerequisites
-To run openhab-cloud make sure docker, docker-machine and docker-compose are installed on your machine.
-More information at [Docker's website](https://docs.docker.com/)
-
-#### Configuration
-You need to modify the ```config.json``` and adjust the hosts of mongodb and redis to match to the corresponding
-container services of docker-compose:
-```
-    "mongodb": {
-        "hosts": ["mongodb"],
-        "db": "openhab",
-        "user": "",
-        "password": ""
-    },
-    "redis": {
-        "host": "redis",
-        "port": "6379",
-        "password": "password"
-    },
-```
-
-To change the server IP/DNS matching your installation, please refer to [Setting up Nginx](#setupNginx)
-
-#### Customization
-
-If you want to customize the openhab-cloud app or change e.g. configurations within ```config.json```,
-you need to switch to the local build of the node app. Adjust the build stratgy in the ```docker-compose.yml```
-and replace the ```image``` section of ```docker-compose.yml``` with the following lines, to not use the official docker hub images anymore and switch to your local sources as base for the app-1 image:
-
-```build: 
-  context: ./
-  dockerfile: ./docker/node/Dockerfile
-```
-
-#### Run
-To create and run the composed application, use the following command: 
-```
-docker-compose up -d
-```
-or with forced recreate:
-```
-docker-compose up -d --force-recreate
-```
-
-#### Logs
-
-To make sure openhab-cloud is running, check the openhab-cloud app logs:
-```
-docker-compose logs app-1
-```
-
-#### Stop & Cleanup
-
-To stop and remove the openhab-cloud containers, use the following commands of docker-compose:
-```
-docker-compose stop
-docker-compose rm
-```
-
-To perform a reset of the complete setup you can additionally stop all docker containers and remove 
-the related images and volumes by the following commands:
-```
-docker stop $(docker ps -a -q)
-docker rmi -f $(docker images -q)
-docker volume rm $(docker volume ls |awk '{print $2}')
-```
-You can also use this command to delete all:
-```
-docker system prune
-```
-
-#### Access
-
-Navigate your browser to ```http://<your-openhab-cloud-host>:<port>``` and log in (e.g. http://localhost:80)
-
-#### Limitations
-* Lets Encrypt SSL is missing in the images and will be added soon
-* The nginx configuration at /etc/nginx_openhabcloud.conf will be reused
 
 
 
@@ -478,13 +379,6 @@ http://YOUR-AWS-EC2-PUBLIC-DNS
 
 You should be ready with your openHAB Cloud installation!
 
-# Release-Notes
-## 1.0.5
-* When upgrading from older versions, please run the `./scripts/deleteDuplicateUserDevices.js`
-  script, start openhab-cloud once (and shut it down again) and then execute the following
-  statement in your MongoDB collection:
-  ```
-  use <YOUR_DB>
-  db.userdevices.reIndex()
-  ```
-  This is necessary to ensure a unique index on the collection.
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fcniweb%2Fopenhab-cloud.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fcniweb%2Fopenhab-cloud?ref=badge_large)
