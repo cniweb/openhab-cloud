@@ -14,6 +14,7 @@ provides an OAuth2 application enablement.
 
 
 ![FunctionalArchitecture](/docs/FunctionalArchitecture_openHAB-cloud_v1.0.png)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fcniweb%2Fopenhab-cloud.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fcniweb%2Fopenhab-cloud?ref=badge_shield)
 
 
 
@@ -377,3 +378,7 @@ http://YOUR-AWS-EC2-PUBLIC-DNS
 ```
 
 You should be ready with your openHAB Cloud installation!
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fcniweb%2Fopenhab-cloud.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fcniweb%2Fopenhab-cloud?ref=badge_large)
