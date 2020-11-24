@@ -31,7 +31,7 @@
         "nodemailer": "0.5.2",
         "connect-redis": "3.1.0",
         "email-templates": "2.4.1",
-        "moment": "2.3.1",
+        "moment": "2.29.1",
         "timezone": "0.0.23",
         "time": "0.11.3",
         "node-xmpp": "0.8.0",
