@@ -1,0 +1,17 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.19.0
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:debug:20170905':
+    - socket.io > socket.io-adapter > socket.io-parser > debug:
+        patched: '2020-12-08T21:34:36.662Z'
+  'npm:lodash:20180130':
+    - email-templates > juice > web-resource-inliner > lodash:
+        patched: '2020-12-08T21:34:36.662Z'
+  'npm:ms:20170412':
+    - socket.io > socket.io-adapter > socket.io-parser > debug > ms:
+        patched: '2020-12-08T21:34:36.662Z'
+  'npm:uglify-js:20151024':
+    - node-xmpp > browserify > umd > ruglify > uglify-js:
+        patched: '2020-12-08T21:34:36.662Z'
