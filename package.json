@@ -43,7 +43,7 @@
         "passport-http-bearer": "1.0.1",
         "socket.io-redis": "0.1.4",
         "memwatch": "0.2.2",
-        "heapdump": "0.3.7",
+        "heapdump": "0.3.15",
         "socket.io-redis": "1.0.0",
         "mongoose-cache": "0.1.4",
         "ratelimiter":"2.1.3",
