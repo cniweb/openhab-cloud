@@ -34,7 +34,7 @@
         "moment": "2.29.1",
         "timezone": "0.0.48",
         "time": "0.11.3",
-        "node-xmpp": "0.8.0",
+        "node-xmpp": "1.1.0",
         "cron": "1.8.2",
         "apn": "1.7.6",
         "oauth2orize": "1.11.0",
