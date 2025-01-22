@@ -37,7 +37,7 @@
     "memwatch-next": "0.3.0",
     "method-override": "^2.3.9",
     "moment": "2.20.1",
-    "mongoose": "5.13.3",
+    "mongoose": "6.13.6",
     "mongoose-types": "1.0.3",
     "morgan": "^1.8.2",
     "node-gcm": "1.0.4",
