@@ -11,7 +11,7 @@
     "snyk-protect": "snyk-protect"
   },
   "dependencies": {
-    "apn": "1.7.6",
+    "apn": "2.1.5",
     "bcrypt-cache": "^1.0.2",
     "bcrypt": "5.0.1",
     "body-parser": "^1.19.2",
@@ -54,8 +54,8 @@
     "request": "^2.88.0",
     "serve-favicon": "^2.4.3",
     "serve-static": "^1.12.3",
-    "socket.io": "4.5.2",
-    "socket.io-client": "1.1.0",
+    "socket.io": "4.8.0",
+    "socket.io-client": "2.2.0",
     "socket.io-redis": "5.4.0",
     "time": "0.11.4",
     "timezone": "0.0.23",
